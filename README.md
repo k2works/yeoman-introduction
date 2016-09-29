@@ -6,10 +6,7 @@ YEOMANを使えるようになる
 # 前提
 | ソフトウェア     | バージョン    | 備考         |
 |:---------------|:-------------|:------------|
-| ChefDK    　　　|0.3.5        |             |
-| Vagrant        |1.6.5        |             |
-| vagrant-berkshelf　　|        |             |
-| vagrant-omnibus　　|        |             |
+| Vagrant        |1.8.4        |             |
 
 
 # 構成
@@ -27,38 +24,24 @@ $ cd /vagrant
 ## <a name="2">はじめに</a>
 ### yoとジェネレーターをインストールする
 ```
-$ sudo chown -R vagrant:vagrant ~/.npm
-$ sudo npm install -g yo bower grunt-cli gulp
+$ npm install -g yo gulp
+$ npm install -g generator-webapp
 ```
 ### 基本スキャフォルド
 ```
 $ mkdir my-yo-project
 $ cd my-yo-project
-$ sudo npm install -g generator-webapp
 $ yo webapp
+$ gulp
 ```
 インストールに失敗したら再度インストールする
 ```
-$ npm install
-```
-
-#### ホストマシンから見れるようにする
-_Gruntfile.js_
-```
-    // The actual grunt server settings
-    connect: {
-      options: {
-        port: 9000,
-        open: true,
-        livereload: 35729,
-        // Change this to '0.0.0.0' to access the server from outside
-        hostname: '0.0.0.0'
-      },
+$ yo webapp
 ```
 
 #### テストサーバを起動する
 ```
-$ grunt server
+$ gulp serve
 ```
 
 ![](https://farm9.staticflickr.com/8671/16455529438_1660bf411b_z.jpg)

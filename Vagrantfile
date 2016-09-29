@@ -10,26 +10,24 @@ apt-get update
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.provision "shell", inline: script
-  # All Vagrant configuration is done here. The most common configuration
-  # options are documented and commented below. For a complete reference,
-  # please see the online documentation at vagrantup.com.
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
 
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu/trusty64"
+  # Every Vagrant development environment require
+  #config.vm.box = "hiroshima-arc/martini"
+  config.vm.box = "martini"
+  config.vm.box_version = "0.0.1"
 
   config.vm.network :forwarded_port, host: 9009, guest: 9000
+  config.vm.synced_folder ".", "/vagrant", mount_options: ['dmode=777','fmode=777']
 
-  config.omnibus.chef_version = :latest
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
 
-  # Enable Berkshelf. If a Berksfile exists or a berksfile_path is given, this
-  # value is automatically set to true. If not, the value is false
-  config.berkshelf.enabled = true
-
-  config.vm.provision "chef_solo" do |chef|
-    chef.add_recipe 'git'
-    chef.add_recipe 'rbenv::default'
-    chef.add_recipe 'rbenv::ruby_build'
-    chef.add_recipe 'nodejs'
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "4096"]
+    vb.customize ["modifyvm", :id, "--vram", "128"]
+    vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
   end
 end
